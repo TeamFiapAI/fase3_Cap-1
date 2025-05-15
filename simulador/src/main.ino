@@ -82,7 +82,7 @@ void loop() {
     Serial.println("❌ Irrigação DESATIVADA");
   }
 
-  Serial.println("-------------------------------");
+  Serial.println("---------------------------------------");
 
   Serial.print(identificador);
   Serial.print(";");
@@ -97,6 +97,7 @@ void loop() {
   Serial.print(temperatura, 2); // 2 casas decimais
   Serial.print(";");
   Serial.println(irrigacao ? 't' : 'f');
-
+  Serial.println("---------------------------------------");
+  Serial.println("");
   delay(5000);
 }
