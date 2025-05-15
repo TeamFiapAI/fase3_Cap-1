@@ -86,9 +86,9 @@ void loop() {
 
   Serial.print(identificador);
   Serial.print(";");
-  Serial.print(fosforoPresente ? 'T' : 'N');
+  Serial.print(fosforoPresente ? 't' : 'f');
   Serial.print(";");
-  Serial.print(potassioPresente ? 'T' : 'N');
+  Serial.print(potassioPresente ? 't' : 'f');
   Serial.print(";");
   Serial.print(valorPH, 2); // 2 casas decimais
   Serial.print(";");
