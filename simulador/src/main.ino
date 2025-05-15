@@ -96,7 +96,7 @@ void loop() {
   Serial.print(";");
   Serial.print(temperatura, 2); // 2 casas decimais
   Serial.print(";");
-  Serial.println(irrigacao ? 'T' : 'F');
+  Serial.println(irrigacao ? 't' : 'f');
 
   delay(5000);
 }
