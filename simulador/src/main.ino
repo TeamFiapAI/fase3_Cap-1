@@ -1,4 +1,6 @@
 #include <DHT.h>
+#include <WiFi.h>
+
 
 #define DHTPIN 23
 #define DHTTYPE DHT22
@@ -10,14 +12,22 @@ const int pinRele = 25;     // Relé
 
 DHT dht(DHTPIN, DHTTYPE);
 
+String getIdentificador() {
+  uint64_t chipid = ESP.getEfuseMac(); // Pega o MAC (64 bits)
+  char id[20];
+  snprintf(id, sizeof(id), "%04X%08X", (uint16_t)(chipid >> 32), (uint32_t)chipid);
+  return String(id);
+}
+
+String identificador;
+
 void setup() {
   Serial.begin(9600);
-
+  identificador = getIdentificador();
+  
   //Botoes
   pinMode(pinFosforo, INPUT_PULLUP);
   pinMode(pinPotassio, INPUT_PULLUP);
-  
-  
   pinMode(pinPH, INPUT);
   pinMode(pinRele, OUTPUT);
   dht.begin();
@@ -62,14 +72,31 @@ void loop() {
   Serial.println(" *C");
 
   // LOGICA PARA LIGAR IRRIGACAO
+  bool irrigacao = false;
   if (umidade < 40) {
     digitalWrite(pinRele, HIGH);
     Serial.println("🚿 Irrigação ATIVADA");
+    irrigacao = true;
   } else {
     digitalWrite(pinRele, LOW);
     Serial.println("❌ Irrigação DESATIVADA");
   }
 
   Serial.println("-------------------------------");
+
+  Serial.print(identificador);
+  Serial.print(";");
+  Serial.print(fosforoPresente ? 'T' : 'N');
+  Serial.print(";");
+  Serial.print(potassioPresente ? 'T' : 'N');
+  Serial.print(";");
+  Serial.print(valorPH, 2); // 2 casas decimais
+  Serial.print(";");
+  Serial.print(umidade, 2); // 2 casas decimais
+  Serial.print(";");
+  Serial.print(temperatura, 2); // 2 casas decimais
+  Serial.print(";");
+  Serial.println(irrigacao ? 'T' : 'F');
+
   delay(5000);
 }
