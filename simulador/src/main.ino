@@ -32,7 +32,7 @@ void setup() {
   pinMode(pinRele, OUTPUT);
   dht.begin();
 
-  Serial.println("Sistema de Monitoramento Agrícola Iniciado");
+  Serial.println("Sistema de Monitoramento Agricola Iniciado");
 }
 
 void loop() {
@@ -54,11 +54,11 @@ void loop() {
       return;
   }
 
-  Serial.print("Fósforo: ");
-  Serial.println(fosforoPresente ? "Sim" : "Não");
+  Serial.print("Fosforo: ");
+  Serial.println(fosforoPresente ? "Sim" : "Nao");
 
-  Serial.print("Potássio: ");
-  Serial.println(potassioPresente ? "Sim" : "Não");
+  Serial.print("Potassio: ");
+  Serial.println(potassioPresente ? "Sim" : "Nao");
 
   Serial.print("pH: ");
   Serial.println(valorPH);
@@ -75,11 +75,11 @@ void loop() {
   bool irrigacao = false;
   if (umidade < 40) {
     digitalWrite(pinRele, HIGH);
-    Serial.println("🚿 Irrigação ATIVADA");
+    Serial.println("[ON] Irrigacao ATIVADA");
     irrigacao = true;
   } else {
     digitalWrite(pinRele, LOW);
-    Serial.println("❌ Irrigação DESATIVADA");
+    Serial.println("[OFF] Irrigacao DESATIVADA");
   }
 
   Serial.println("---------------------------------------");
@@ -90,11 +90,11 @@ void loop() {
   Serial.print(";");
   Serial.print(potassioPresente ? 't' : 'f');
   Serial.print(";");
-  Serial.print(valorPH, 2); // 2 casas decimais
+  Serial.print(valorPH, 2);
   Serial.print(";");
-  Serial.print(umidade, 2); // 2 casas decimais
+  Serial.print(umidade, 2);
   Serial.print(";");
-  Serial.print(temperatura, 2); // 2 casas decimais
+  Serial.print(temperatura, 2);
   Serial.print(";");
   Serial.println(irrigacao ? 't' : 'f');
   Serial.println("---------------------------------------");
