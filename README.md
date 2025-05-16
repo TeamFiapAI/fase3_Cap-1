@@ -46,20 +46,15 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 ### Entrega 1: Sistema de Sensores e Controle com ESP32
 ├── 📁 /simulador/
 
+<img src="./simulador/images/projeto.png" alt="Projeto ESP32 - Wokwi">
+
 <table>
-  <tr style="text-align: center;">
-    <td colspan="2">
-      <img src="./simulador/images/projeto.png"
-           alt="Projeto ESP32 - Wokwi"
-           style="width: 80%; max-width: 700px; display: block; margin: 0 auto;">
-    </td>
-  </tr>
   <tr>
-    <td style="width: 50%; vertical-align: top; padding: 5px;">
+    <td style="width: 50%; vertical-align: top;">
       <h4>Bomba Ativada - Umidade <= 40%</h4>
       <img src="./simulador/images/log_irrigacao_ativada.png" alt="Texto alternativo Log 1" style="width: 100%;">
     </td>
-    <td style="width: 50%; vertical-align: top; padding: 5px;">
+    <td style="width: 50%; vertical-align: top;">
       <h4>Log 2 Bomba Desativada - Humidade > 40%</h4>
       <img src="./simulador/images/log_irrigacao_desativada.png" alt="Texto alternativo Log 2" style="width: 100%;">
     </td>
