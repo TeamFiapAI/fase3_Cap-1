@@ -60,3 +60,7 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
     </td>
   </tr>
 </table>
+
+### Entrega 2: Armazenamento de Dados em Banco SQL com Python
+### Entrega 3.1: Dashboard em Python para Visualização dos Dados (IR ALÉM)
+### Entrega 3.2: Integração Python com API Pública (IR ALÉM)
