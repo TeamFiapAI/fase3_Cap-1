@@ -73,7 +73,7 @@ void loop() {
 
   // LOGICA PARA LIGAR IRRIGACAO
   bool irrigacao = false;
-  if (umidade < 40) {
+  if (umidade <= 40) {
     digitalWrite(pinRele, HIGH);
     Serial.println("[ON] Irrigacao ATIVADA");
     irrigacao = true;
@@ -83,7 +83,7 @@ void loop() {
   }
 
   Serial.println("---------------------------------------");
-
+  // LOG PARA O BANCO DE DADOS
   Serial.print(identificador);
   Serial.print(";");
   Serial.print(fosforoPresente ? 't' : 'f');

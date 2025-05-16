@@ -20,8 +20,8 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 ```plaintext
 📁 /
 ├── 📄 README.md
-├── 📁 /simulador/ → Codigo para utilizar no WokWi on-line
-│   ├── 📁 /images/
+├── 📁 /simulador/  → Codigo para utilizar no WokWi on-line
+│   ├── 📁 /images/ → Imagens usadas no Readme
 │   ├── diagram.json    → Formato JSON, que renderiza o Wokwi
 │   ├── libraries.txt   → Bibliotecas utilizadas no projeto
 │   ├── main.ino        → Codigo C++ da placa ESP32
@@ -41,3 +41,24 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 - Nome: Fernando Gomes da Silva
 - Nome: Guilherme Urbinatti
 - Nome: Vinicius Burchert Vilas Boas
+
+## 📝 ATIVIDADES
+### Entrega 1: Sistema de Sensores e Controle com ESP32
+├── 📁 /simulador/
+
+<table>
+  <tr>
+    <td colspan="2" style="text-align: center;"> <img src="./simulador/images/projeto.png" alt="Projeto ESP32 - Wokwi" style="width: 80%; max-width: 700px;">
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 50%; vertical-align: top; padding: 5px;">
+      <h4>Bomba Ativada - Umidade <= 40%</h4>
+      <img src="./simulador/images/log_irrigacao_ativada.png" alt="Texto alternativo Log 1" style="width: 100%;">
+    </td>
+    <td style="width: 50%; vertical-align: top; padding: 5px;">
+      <h4>Log 2 Bomba Desativada - Humidade > 40%</h4>
+      <img src="./simulador/images/log_irrigacao_desativada.png" alt="Texto alternativo Log 2" style="width: 100%;">
+    </td>
+  </tr>
+</table>
