@@ -33,8 +33,8 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 |   |   ├── 
 ```
 ## 🔗 Links Úteis
-- [🤖 Projeto no Wokwi](https://wokwi.com/projects/430970377652249601) – Simulador online de circuitos  
-- [▶️ Demonstração no YouTube](https://www.youtube.com/) – Vídeo demonstrando o funcionamento do projeto
+- 🤖 [Projeto no Wokwi](https://wokwi.com/projects/430970377652249601) – Simulador online de circuitos  
+- ▶️ [Demonstração no YouTube](https://www.youtube.com/) – Vídeo demonstrando o funcionamento do projeto
 
 ## 👥 Alunos
 - Nome: Felipe Balthazar de Almeida
