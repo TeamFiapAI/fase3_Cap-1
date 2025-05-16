@@ -47,8 +47,8 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 ├── 📁 /simulador/
 
 <table>
-  <tr>
-    <td colspan="2" style="text-align: center;">
+  <tr style="text-align: center;">
+    <td colspan="2">
       <img src="./simulador/images/projeto.png"
            alt="Projeto ESP32 - Wokwi"
            style="width: 80%; max-width: 700px; display: block; margin: 0 auto;">
