@@ -52,11 +52,11 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
   <tr>
     <td>
       <h4>Bomba Ativada - Umidade <= 40%</h4>
-      <img src="./simulador/images/log_irrigacao_ativada.png" alt="Texto alternativo Log 1" style="width: 100%;">
+      <img src="./simulador/images/log_irrigacao_ativada.png" alt="Texto alternativo Log 1"style="width: 250px; height: 150px; object-fit: cover;">
     </td>
     <td>
       <h4>Log 2 Bomba Desativada - Humidade > 40%</h4>
-      <img src="./simulador/images/log_irrigacao_desativada.png" alt="Texto alternativo Log 2" style="width: 100%;">
+      <img src="./simulador/images/log_irrigacao_desativada.png" alt="Texto alternativo Log 2" style="width: 250px; height: 150px; object-fit: cover;">
     </td>
   </tr>
 </table>
