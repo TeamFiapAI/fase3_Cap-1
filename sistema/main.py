@@ -1,4 +1,4 @@
-from db import executar_ddl
+from db import executar_ddl, executar_insert
 
 
 def exibir_menu():
@@ -48,6 +48,7 @@ def main():
 if __name__ == "__main__":
     try:
         executar_ddl()
+        executar_insert()
         main()
     except Exception as e:
         print(f"\n Ocorreu um erro inesperado: {e}")
