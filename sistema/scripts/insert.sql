@@ -61,20 +61,48 @@ INSERT INTO Plantacao (id_plantacao, id_fazenda, id_cultura, data_inicio, data_f
 --TIPOSENSOR
 INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (1, 'Umidade', '%');
 INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (2, 'pH', 'pH');
-INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (3, 'Nutrientes NPK', 'mg/kg');
-
+INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (3, 'Nutrientes NPK - fosforo', 'True/False');
+INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (4, 'Nutrientes NPK - potassio', 'True/False');
+INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (5, 'Temperatura', '°C');
+INSERT INTO TipoSensor (id_tipo_sensor, nome_tipo, unidade_medida) VALUES (6, 'Bomba Aberta', 'True/False');
 --SENSOR
 INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (1, 1, 1, 'HUM-S123');
 INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (2, 2, 1, 'PH-M456');
 INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (3, 3, 1, 'NPK-X789');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (3, 3, 1, 'NPK-X789');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (4, 1, 2, 'HUM-S124');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (5, 2, 2, 'PH-M457');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (6, 3, 2, 'NPK-X790');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (7, 1, 3, 'HUM-S125');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (8, 2, 3, 'PH-M458');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (9, 3, 3, 'NPK-X791');
-INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (10, 1, 4, 'HUM-S126');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (4, 4, 1, 'HUM-S123');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (5, 5, 1, 'PH-M456');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (6, 6, 1, 'BMB-SPX1');
+
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (6, 3, 1, 'NPK-X789');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (7, 1, 2, 'HUM-S124');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (8, 2, 2, 'PH-M457');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (9, 3, 2, 'NPK-X790');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (10, 1, 3, 'HUM-S125');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (11, 2, 3, 'PH-M458');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (12, 3, 3, 'NPK-X791');
+INSERT INTO Sensor (id_sensor, id_tipo_sensor, id_plantacao, modelo) VALUES (13, 1, 4, 'HUM-S126');
+
+--LEITURASENSOR
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (1, TO_TIMESTAMP('2025-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 35);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (2, TO_TIMESTAMP('2025-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 7);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (3, TO_TIMESTAMP('2025-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (4, TO_TIMESTAMP('2025-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (5, TO_TIMESTAMP('2025-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 22);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (6, TO_TIMESTAMP('2025-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (1, TO_TIMESTAMP('2025-01-02 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 45);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (2, TO_TIMESTAMP('2025-01-02 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 7);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (3, TO_TIMESTAMP('2025-01-02 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (4, TO_TIMESTAMP('2025-01-02 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (5, TO_TIMESTAMP('2025-01-02 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 24);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (6, TO_TIMESTAMP('2025-01-02 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0);
+
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (1, TO_TIMESTAMP('2025-01-03 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 50);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (2, TO_TIMESTAMP('2025-01-03 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 13);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (3, TO_TIMESTAMP('2025-01-03 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (4, TO_TIMESTAMP('2025-01-03 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (5, TO_TIMESTAMP('2025-01-03 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 19);
+INSERT INTO LeituraSensor (id_sensor, data_hora, valor_lido) VALUES (6, TO_TIMESTAMP('2025-01-03 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0);
 
 -- TipoProduto
 INSERT INTO TipoProduto (id_tipo_produto, nome_produto, descricao) VALUES (1, 'Água', 'Irrigação com água pura');
@@ -82,31 +110,6 @@ INSERT INTO TipoProduto (id_tipo_produto, nome_produto, descricao) VALUES (2, 'F
 INSERT INTO TipoProduto (id_tipo_produto, nome_produto, descricao) VALUES (3, 'Corretivo de Solo', 'Produto para ajuste de pH');
 INSERT INTO TipoProduto (id_tipo_produto, nome_produto, descricao) VALUES (4, 'Herbicida', 'Controle de plantas daninhas');
 INSERT INTO TipoProduto (id_tipo_produto, nome_produto, descricao) VALUES (5, 'Inseticida', 'Controle de pragas');
-
---LEITURASENSOR
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (1, 2, TO_TIMESTAMP('2024-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.52);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (2, 2, TO_TIMESTAMP('2024-01-16 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.35);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (3, 2, TO_TIMESTAMP('2024-01-31 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.72);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (4, 1, TO_TIMESTAMP('2025-01-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.12);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (5, 2, TO_TIMESTAMP('2025-01-02 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.45);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (6, 3, TO_TIMESTAMP('2025-01-03 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.78);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (7, 4, TO_TIMESTAMP('2025-01-04 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.01);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (8, 5, TO_TIMESTAMP('2025-01-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.89);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (9, 6, TO_TIMESTAMP('2025-01-06 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.22);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (10, 7, TO_TIMESTAMP('2025-01-07 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.67);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (11, 8, TO_TIMESTAMP('2025-01-08 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.11);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (12, 9, TO_TIMESTAMP('2025-01-09 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.98);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (13, 10, TO_TIMESTAMP('2025-01-10 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.34);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (14, 1, TO_TIMESTAMP('2025-01-11 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.45);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (15, 2, TO_TIMESTAMP('2025-01-12 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.23);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (16, 3, TO_TIMESTAMP('2025-01-13 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.76);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (17, 4, TO_TIMESTAMP('2025-01-14 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.02);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (18, 5, TO_TIMESTAMP('2025-01-15 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.88);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (19, 6, TO_TIMESTAMP('2025-01-16 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.19);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (20, 7, TO_TIMESTAMP('2025-01-17 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.71);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (21, 8, TO_TIMESTAMP('2025-01-18 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.08);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (22, 9, TO_TIMESTAMP('2025-01-19 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5.95);
-INSERT INTO LeituraSensor (id_leitura, id_sensor, data_hora, valor_lido) VALUES (23, 10, TO_TIMESTAMP('2025-01-20 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6.30);
 
 --APLICACAOPRODUTO
 INSERT INTO AplicacaoProduto (id_aplicacao, id_plantacao, id_tipo_produto, data_hora, quantidade, unidade) VALUES (1, 1, 1, TO_TIMESTAMP('2024-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 469.96, 'litros');
