@@ -69,7 +69,7 @@ def main():
         elif opcao == "14":
             insere_via_simulador()
         elif opcao == "15":
-            insere_via_texto()
+            insere_via_texto(False)
         elif opcao == "16":
             gerar_graficos()
         elif opcao == "17":

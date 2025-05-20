@@ -21,17 +21,21 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 📁 /
 ├── 📄 README.md
 ├── 📁 /simulador/  → Codigo para utilizar no WokWi on-line.
-│   ├── 📁 /api/ → Ir alem. Codigo phyton que consome API.
 │   ├── 📁 /images/ → Imagens usadas no Readme.
 │   ├── diagram.json    → Formato JSON, que renderiza o Wokwi.
 │   ├── libraries.txt   → Bibliotecas utilizadas no projeto.
 │   ├── main.ino        → Codigo C++ da placa ESP32.
 ├── 📁 /sistema/ → Todas as funcionalidades do nosso sistema.
+|   ├── 📁 /api/        → Ir alem. Codigo phyton que consome uma api.
 |   ├── 📁 /config/     → Arquivo que tem a conexao da base de dados SQL.
 |   ├── 📁 /dashboard/  → Ir alem. Codigo phyton que gera os graficos.
 |   ├── 📁 /files/      → Arquivos de entrada ou saida do sistema gerados.
-|   |   ├── registrosESP32.txt → Registros gerados pela placa ESP32, para entrada em lote no sistema.
-|   |   ├── 
+|   |   ├── registrosESP32.txt → Registros gerados pela placa ESP32, para entrada 
+|   |   ├── grafico_bomba_trend.png → Ir alem. Graficos gerados
+|   |   ├── grafico_ph_zona.png → Ir alem. Graficos gerados
+|   |   ├── grafico_potassio_detectado.png → Ir alem. Graficos gerados
+|   |   ├── grafico_temperatura.png → Ir alem. Graficos gerados
+|   |   ├── 📁 /prints/ → usado no readme.
 |   ├── 📁 /scripts/ → Usado para manutencao da base de dados.
 |   |   ├── contador_leituras.sql -> Select que contabiliza as leituras por sensor (nao usado no sistema).
 |   |   ├── droptables.sql        -> Apaga as tabelas.
@@ -42,9 +46,9 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
 |   ├── editar.py     -> Edita Leituras do sensor.
 |   ├── excluir.py    -> Excluir leituras do sensor.
 |   ├── exibir.py     -> Exibe as leituras do sensor.
-|   ├── inserir.py    -> Insere manualmente leituras do sensor.
+|   ├── inserir.py    -> Inseri manualmente leituras do sensor.
 |   ├── main.py       -> Inicio do programa e menus.
-|   ├── simulador.py  -> Insere via texto(lote) ou formato especifico da saida da placa ESP32.
+|   ├── simulador.py  -> Inseri via texto(lote) ou formato especifico da saida da placa ESP32.
 ```
 ## 🔗 Links Úteis
 - 🤖 [Projeto no Wokwi](https://wokwi.com/projects/430970377652249601) – Simulador online de circuitos  
@@ -76,8 +80,7 @@ Este projeto simula um sistema de **irrigação inteligente** utilizando sensore
   </tr>
 </table>
 
-- Umidade abaixo de 40%, deve ativar a bomba
-
+- Umidade abaixo de 40%, deve ativar a bomba;
 ![Lógica Irrigacao](./sistema/files/prints/logica_irrigacao.png)
 
 ### Entrega 2: Armazenamento de Dados em Banco SQL com Python

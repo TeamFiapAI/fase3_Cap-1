@@ -17,14 +17,14 @@ def insere_via_simulador(usar_api=False):
     linha_simulador = input("COLE AQUI: ")
     split_linha(linha_simulador, usar_api)
 
-def insere_via_texto():
+def insere_via_texto(usar_api=False):
     nome_arquivo = "./files/registrosESP32.txt"
     try:
         with open(nome_arquivo, 'r') as arquivo:
             for linha in arquivo:
                 linha = linha.strip()
                 if linha:
-                    split_linha(linha)
+                    split_linha(linha, usar_api)
         print(f"\nProcessamento do arquivo '{nome_arquivo}' concluído.")
     except FileNotFoundError:
         print(f"Erro: Arquivo '{nome_arquivo}' não encontrado.")
