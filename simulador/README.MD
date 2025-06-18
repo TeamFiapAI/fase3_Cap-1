@@ -55,12 +55,14 @@ Variáveis plotadas:
 ```
 Temperatura: 78.7
 Umidade: 38.5%
+Obs: Grafico mostrando as variaveis.
 ```
 > ![Plotter Serial](../simulador/images/serial-plotter_1.png)
 #### Exemplo 2
 ```
 Temperatura: -16.8
 Umidade: 31.0%
+Obs: Grafico mostrando a queda.
 ```
 > ![Plotter Serial](../simulador/images/serial-plotter_2.png)
 
