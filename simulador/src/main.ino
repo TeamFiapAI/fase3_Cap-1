@@ -75,8 +75,8 @@ void loop() {
   lcd.print(valorPH, 1);
 
   lcd.setCursor(0, 1);
-  lcd.print("NPK:");
-  lcd.print(fosforo ? "F" : "-");
+  lcd.print("PK:");
+  lcd.print(fosforo ? "P" : "-");
   lcd.print(potassio ? "K" : "-");
   lcd.print(" ");
   lcd.print(irrigacao ? "ON " : "OFF");
