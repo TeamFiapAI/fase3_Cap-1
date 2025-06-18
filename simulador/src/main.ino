@@ -1,103 +1,93 @@
 #include <DHT.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 #include <WiFi.h>
 
-
+// Umidade
 #define DHTPIN 23
 #define DHTTYPE DHT22
+// Rele
+#define PIN_PH 32
+#define PIN_RELE 25
 
-const int pinFosforo = 22;
-const int pinPotassio = 17;
-const int pinPH = 32;       // LDR
-const int pinRele = 25;     // Relé
+// Potassio e Fosforo
+#define PIN_FOSFORO 18
+#define PIN_POTASSIO 16
 
+// Inicialização de componentes
 DHT dht(DHTPIN, DHTTYPE);
-
-String getIdentificador() {
-  uint64_t chipid = ESP.getEfuseMac(); // Pega o MAC (64 bits)
-  char id[20];
-  snprintf(id, sizeof(id), "%04X%08X", (uint16_t)(chipid >> 32), (uint32_t)chipid);
-  return String(id);
-}
-
-String identificador;
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Endereço padrão 0x27
 
 void setup() {
-  Serial.begin(9600);
-  identificador = getIdentificador();
+  Serial.begin(115200);
   
-  //Botoes
-  pinMode(pinFosforo, INPUT_PULLUP);
-  pinMode(pinPotassio, INPUT_PULLUP);
-  pinMode(pinPH, INPUT);
-  pinMode(pinRele, OUTPUT);
   dht.begin();
 
-  Serial.println("Sistema de Monitoramento Agricola Iniciado");
+  // Configuração do LCD
+  Wire.begin(21, 22);
+  lcd.init();
+  lcd.backlight();
+
+  // GPIO de entrada com pull-up para botões
+  pinMode(PIN_FOSFORO, INPUT_PULLUP);
+  pinMode(PIN_POTASSIO, INPUT_PULLUP);
+
+  // LDR e relé
+  pinMode(PIN_PH, INPUT);
+  pinMode(PIN_RELE, OUTPUT);
+
+  lcd.setCursor(0, 0);
+  lcd.print("Monitor Iniciado");
+  delay(2000);
+  lcd.clear();
 }
 
 void loop() {
-  // Simuladores de Fosforo e Potassio
-  bool fosforoPresente = digitalRead(pinFosforo) == LOW;
-  bool potassioPresente = digitalRead(pinPotassio) == LOW;
-  
-  // valor entre 0 e 4095
-  int valorLDR = analogRead(pinPH);
-  // Mapeia para escala de pH entre 0 e 14
+  // Entradas
+  bool fosforo = digitalRead(PIN_FOSFORO) == LOW;
+  bool potassio = digitalRead(PIN_POTASSIO) == LOW;
+
+  int16_t valorLDR = analogRead(PIN_PH);
   float valorPH = map(valorLDR, 0, 4095, 0, 1400) / 100.0;
-  
+
   float umidade = dht.readHumidity();
   float temperatura = dht.readTemperature();
 
-  // Possivel Erro de Leitura
   if (isnan(umidade) || isnan(temperatura)) {
-      Serial.println("Falha ao ler do sensor DHT!");
-      return;
+    Serial.println("Falha ao ler o sensor DHT!");
+    return;
   }
 
-  Serial.print("Fosforo: ");
-  Serial.println(fosforoPresente ? "Sim" : "Nao");
-
-  Serial.print("Potassio: ");
-  Serial.println(potassioPresente ? "Sim" : "Nao");
-
-  Serial.print("pH: ");
-  Serial.println(valorPH);
-
-  Serial.print("Umidade: ");
-  Serial.print(umidade);
-  Serial.println(" %");
-
-  Serial.print("Temperatura: ");
-  Serial.print(temperatura);
-  Serial.println(" *C");
-
-  // LOGICA PARA LIGAR IRRIGACAO
+  // Lógica de irrigação
   bool irrigacao = false;
-  if (umidade <= 40) {
-    digitalWrite(pinRele, HIGH);
-    Serial.println("[ON] Irrigacao ATIVADA");
+  if (umidade < 40.0) {
+    digitalWrite(PIN_RELE, HIGH);
     irrigacao = true;
   } else {
-    digitalWrite(pinRele, LOW);
-    Serial.println("[OFF] Irrigacao DESATIVADA");
+    digitalWrite(PIN_RELE, LOW);
   }
 
-  Serial.println("---------------------------------------");
-  // LOG PARA O BANCO DE DADOS
-  Serial.print(identificador);
-  Serial.print(";");
-  Serial.print(fosforoPresente ? 't' : 'f');
-  Serial.print(";");
-  Serial.print(potassioPresente ? 't' : 'f');
-  Serial.print(";");
-  Serial.print(valorPH, 2);
-  Serial.print(";");
-  Serial.print(umidade, 2);
-  Serial.print(";");
-  Serial.print(temperatura, 2);
-  Serial.print(";");
-  Serial.println(irrigacao ? 't' : 'f');
-  Serial.println("---------------------------------------");
-  Serial.println("");
+  // Exibe no LCD
+  lcd.setCursor(0, 0);
+  lcd.print("U:");
+  lcd.print((uint8_t)umidade);
+  lcd.print("% pH:");
+  lcd.print(valorPH, 1);
+
+  lcd.setCursor(0, 1);
+  lcd.print("NPK:");
+  lcd.print(fosforo ? "F" : "-");
+  lcd.print(potassio ? "K" : "-");
+  lcd.print(" ");
+  lcd.print(irrigacao ? "ON " : "OFF");
+
+  // Serial Plotter
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.print("°C  |  Umidade: ");
+  Serial.print(umidade);
+  Serial.println("%");
+
+
   delay(5000);
 }
