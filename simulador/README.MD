@@ -44,6 +44,8 @@ Bomba: ON
 
 O código foi adaptado para imprimir no Serial os dados lidos pelos sensores. Isso permite a utilização do Serial Plotter do Wokwi para visualizar em tempo real as variações de Temperatura e Umidade .
 
+[Projeto WokiWi](https://wokwi.com/projects/434089547667747841)
+
 Variáveis plotadas:
 - Temperatura
 - Umidade
