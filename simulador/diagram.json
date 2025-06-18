@@ -7,7 +7,7 @@
     {
       "type": "wokwi-dht22",
       "id": "dht1",
-      "top": 211.5,
+      "top": 249.9,
       "left": 148.2,
       "attrs": { "temperature": "19.3", "humidity": "34.5" }
     },
@@ -21,29 +21,40 @@
     {
       "type": "wokwi-pushbutton",
       "id": "btnK",
-      "top": 131,
-      "left": 211.2,
+      "top": 179,
+      "left": 220.8,
       "attrs": { "label": "Potássio (K)", "color": "green" }
     },
     { "type": "wokwi-ldr-sensor", "id": "ldr", "top": 130, "left": 150, "attrs": {} },
-    { "type": "wokwi-relay-module", "id": "relay", "top": 77, "left": -115.2, "attrs": {} }
+    { "type": "wokwi-relay-module", "id": "relay", "top": 77, "left": -182.4, "attrs": {} },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": -147.2,
+      "left": 159.2,
+      "attrs": { "pins": "i2c" }
+    }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
     [ "dht1:VCC", "esp:5V", "red", [ "v9.6", "h-134.4", "v-96" ] ],
     [ "dht1:SDA", "esp:23", "cyan", [ "h0.1", "v9.6", "h240", "v-259.2" ] ],
-    [ "btnP:1.l", "esp:22", "green", [ "v-9.6", "h-211.2" ] ],
-    [ "btnP:2.l", "esp:GND.3", "black", [ "v9.8", "h-211.2" ] ],
-    [ "btnK:2.l", "esp:17", "blue", [ "v0.2", "h-115.2" ] ],
-    [ "btnK:1.l", "esp:GND.3", "black", [ "v-19.2", "h-307.2" ] ],
+    [ "btnP:2.l", "esp:18", "green", [ "h-19.2", "v29" ] ],
+    [ "btnP:1.l", "esp:GND.3", "black", [ "h-28.8", "v28.8" ] ],
+    [ "btnK:2.l", "esp:16", "blue", [ "h-9.6", "v-38.2" ] ],
+    [ "btnK:1.l", "esp:GND.3", "black", [ "v-67.2", "h-96" ] ],
     [ "ldr:AO", "esp:32", "purple", [] ],
     [ "ldr:GND", "esp:GND.1", "black", [] ],
     [ "ldr:VCC", "esp:3V3", "red", [] ],
     [ "relay:IN", "esp:25", "orange", [ "v28.6", "h163.05" ] ],
     [ "relay:GND", "esp:GND.1", "black", [ "h-9.6", "v105.2" ] ],
     [ "relay:VCC", "esp:5V", "red", [ "h-19.2", "v144" ] ],
-    [ "dht1:GND", "esp:GND.3", "black", [ "h105.6", "v-201.6" ] ]
+    [ "dht1:GND", "esp:GND.3", "black", [ "h105.6", "v-201.6" ] ],
+    [ "lcd1:GND", "esp:GND.1", "black", [ "h-144", "v307.2" ] ],
+    [ "lcd1:VCC", "esp:3V3", "red", [ "v0.1", "h-57.75" ] ],
+    [ "lcd1:SDA", "esp:21", "magenta", [ "v0.2", "h-19.2", "v211.2" ] ],
+    [ "lcd1:SCL", "esp:22", "orange", [ "v0.3", "h-28.8", "v172.8" ] ]
   ],
   "dependencies": {}
 }
