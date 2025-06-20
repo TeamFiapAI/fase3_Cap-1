@@ -1,3 +1,7 @@
+import subprocess
+import webbrowser
+import os
+import sys
 from db import executar_ddl, executar_insert, dropar_tabelas
 from exibir import exibir_produtores, exibir_fazendas, exibir_fazendas_produtores, exibir_tipo_sensor, exibir_sensor, exibir_plantacao, exibir_culturas, exibir_tipo_produto, exibir_aplicacao_produto, exibir_leitura_sensor
 from inserir import inserir_leitura_sensor
@@ -28,7 +32,9 @@ def exibir_menu():
     print("16. * EXTRA - Graficos")
     print("17. * EXTRA - Consumir API")
     print("171. * EXTRA - Inserir Leitura Sensor via API")
-    print("18. Sair")
+    print("18. Scikit-learn (oracle)")
+    print("181 Scikit-learn (simulado CSV)")
+    print("19. Sair")
 
 
 def main():
@@ -77,6 +83,27 @@ def main():
         elif opcao == "171":
             insere_via_simulador(True)
         elif opcao == "18":
+
+            # Abrir o navegador e Executar o Streamlit em segundo plano
+            webbrowser.open("http://localhost:8501")
+            subprocess.Popen(
+                [sys.executable, "-m", "streamlit", "run", "app_scikit_learn.py"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            print("✅ Streamlit iniciado. Acesse http://localhost:8501")
+        elif opcao == "181":
+            caminho = os.path.join("Scikit-learn_Streamlit", "app_atualizado.py")
+            
+            # Abrir o navegador e Executar o Streamlit em segundo plano
+            webbrowser.open("http://localhost:8502")
+            subprocess.Popen(
+                [sys.executable, "-m", "streamlit", "run", caminho],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            print("✅ Streamlit iniciado. Acesse http://localhost:8502")
+        elif opcao == "19":
             print("Encerrando o programa.")
             break
         else:
@@ -87,3 +114,4 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         print(f"\n Ocorreu um erro inesperado: {e}")
+

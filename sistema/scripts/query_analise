@@ -1,0 +1,23 @@
+SELECT
+  Leitura.data_hora,
+  Cultura.Nome_Cultura,
+  Tipo.Nome_Tipo,
+  Leitura.valor_lido
+FROM 
+    LeituraSensor Leitura
+LEFT JOIN
+    Sensor Sensor
+ON
+    Sensor.id_sensor = Leitura.id_sensor
+LEFT JOIN
+    TipoSensor Tipo
+On
+    Sensor.id_tipo_sensor = Tipo.id_tipo_sensor
+LEFT JOIN
+    Plantacao Plantacao
+On
+    Sensor.id_Plantacao = Plantacao.id_plantacao
+LEFT JOIN
+    Cultura Cultura
+ON
+    Plantacao.id_cultura = Cultura.id_cultura
