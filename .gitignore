@@ -1,0 +1,6 @@
+__pycache__/
+config/config.json
+api/__pycache__/*
+dashboard/__pycache__/*
+sistema/__pycache__/*
+sistema/config/config.json
