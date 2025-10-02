@@ -5,3 +5,4 @@
 DHT sensor library
 
 DHT22
+LiquidCrystal I2C

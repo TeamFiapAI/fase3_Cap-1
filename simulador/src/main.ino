@@ -1,103 +1,134 @@
 #include <DHT.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
 
+#define WIFI_SSID "Wokwi-GUEST"
+#define WIFI_PASSWORD ""
+#define SERVER_URL "http://192.168.68.61:8000/dados/"
 
 #define DHTPIN 23
 #define DHTTYPE DHT22
+#define PIN_PH 32
+#define PIN_RELE 25
+#define PIN_FOSFORO 18
+#define PIN_POTASSIO 16
 
-const int pinFosforo = 22;
-const int pinPotassio = 17;
-const int pinPH = 32;       // LDR
-const int pinRele = 25;     // Relé
 
 DHT dht(DHTPIN, DHTTYPE);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 String getIdentificador() {
-  uint64_t chipid = ESP.getEfuseMac(); // Pega o MAC (64 bits)
-  char id[20];
-  snprintf(id, sizeof(id), "%04X%08X", (uint16_t)(chipid >> 32), (uint32_t)chipid);
-  return String(id);
+  return "HUM-S123";
 }
 
-String identificador;
+void conectarWiFi() {
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Conectando ao WiFi");
+
+  int tentativas = 0;
+  while (WiFi.status() != WL_CONNECTED && tentativas < 20) {
+    delay(500);
+    Serial.print(".");
+    tentativas++;
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("WiFi conectado: " + WiFi.localIP().toString());
+  } else {
+    Serial.println("Falha ao conectar ao WiFi.");
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Falha WiFi");
+    delay(2000);
+    lcd.clear();
+  }
+}
 
 void setup() {
-  Serial.begin(9600);
-  identificador = getIdentificador();
+  Serial.begin(115200);
   
-  //Botoes
-  pinMode(pinFosforo, INPUT_PULLUP);
-  pinMode(pinPotassio, INPUT_PULLUP);
-  pinMode(pinPH, INPUT);
-  pinMode(pinRele, OUTPUT);
   dht.begin();
 
-  Serial.println("Sistema de Monitoramento Agricola Iniciado");
+  Wire.begin(21, 22);
+  lcd.init();
+  lcd.backlight();
+
+  pinMode(PIN_FOSFORO, INPUT_PULLUP);
+  pinMode(PIN_POTASSIO, INPUT_PULLUP);
+  pinMode(PIN_PH, INPUT);
+  pinMode(PIN_RELE, OUTPUT);
+
+  conectarWiFi();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Monitor Iniciado");
+  delay(2000);
+  lcd.clear();
 }
 
 void loop() {
-  // Simuladores de Fosforo e Potassio
-  bool fosforoPresente = digitalRead(pinFosforo) == LOW;
-  bool potassioPresente = digitalRead(pinPotassio) == LOW;
-  
-  // valor entre 0 e 4095
-  int valorLDR = analogRead(pinPH);
-  // Mapeia para escala de pH entre 0 e 14
+  bool fosforo = digitalRead(PIN_FOSFORO) == LOW;
+  bool potassio = digitalRead(PIN_POTASSIO) == LOW;
+  int16_t valorLDR = analogRead(PIN_PH);
   float valorPH = map(valorLDR, 0, 4095, 0, 1400) / 100.0;
-  
+
   float umidade = dht.readHumidity();
   float temperatura = dht.readTemperature();
 
-  // Possivel Erro de Leitura
   if (isnan(umidade) || isnan(temperatura)) {
-      Serial.println("Falha ao ler do sensor DHT!");
-      return;
+    Serial.println("Falha ao ler o sensor DHT!");
+    return;
   }
 
-  Serial.print("Fosforo: ");
-  Serial.println(fosforoPresente ? "Sim" : "Nao");
+  bool irrigacao = false;
+  if (umidade < 40.0) {
+    digitalWrite(PIN_RELE, HIGH);
+    irrigacao = true;
+  } else {
+    digitalWrite(PIN_RELE, LOW);
+  }
 
-  Serial.print("Potassio: ");
-  Serial.println(potassioPresente ? "Sim" : "Nao");
+  lcd.setCursor(0, 0);
+  lcd.print("U:");
+  lcd.print((uint8_t)umidade);
+  lcd.print("% pH:");
+  lcd.print(valorPH, 1);
 
-  Serial.print("pH: ");
-  Serial.println(valorPH);
-
-  Serial.print("Umidade: ");
-  Serial.print(umidade);
-  Serial.println(" %");
+  lcd.setCursor(0, 1);
+  lcd.print("PK:");
+  lcd.print(fosforo ? "P" : "-");
+  lcd.print(potassio ? "K" : "-");
+  lcd.print(" ");
+  lcd.print(irrigacao ? "ON " : "OFF");
 
   Serial.print("Temperatura: ");
   Serial.print(temperatura);
-  Serial.println(" *C");
+  Serial.print("°C  |  Umidade: ");
+  Serial.print(umidade);
+  Serial.println("%");
 
-  // LOGICA PARA LIGAR IRRIGACAO
-  bool irrigacao = false;
-  if (umidade <= 40) {
-    digitalWrite(pinRele, HIGH);
-    Serial.println("[ON] Irrigacao ATIVADA");
-    irrigacao = true;
-  } else {
-    digitalWrite(pinRele, LOW);
-    Serial.println("[OFF] Irrigacao DESATIVADA");
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin(SERVER_URL);
+    http.addHeader("Content-Type", "application/json");
+
+    String payload = "{";
+    payload += "\"temperatura\":" + String(temperatura, 1) + ",";
+    payload += "\"umidade\":" + String(umidade, 1) + ",";
+    payload += "\"ph\":" + String(valorPH, 1) + ",";
+    payload += "\"fosforo\":" + String(fosforo ? "true" : "false") + ",";
+    payload += "\"potassio\":" + String(potassio ? "true" : "false") + ",";
+    payload += "\"modelo\":\"" + getIdentificador() + "\"";
+    payload += "}";
+
+    int httpResponseCode = http.POST(payload);
+    Serial.println("POST enviado | Código HTTP: " + String(httpResponseCode));
+    Serial.println("Payload: " + payload);
+
+    http.end();
   }
 
-  Serial.println("---------------------------------------");
-  // LOG PARA O BANCO DE DADOS
-  Serial.print(identificador);
-  Serial.print(";");
-  Serial.print(fosforoPresente ? 't' : 'f');
-  Serial.print(";");
-  Serial.print(potassioPresente ? 't' : 'f');
-  Serial.print(";");
-  Serial.print(valorPH, 2);
-  Serial.print(";");
-  Serial.print(umidade, 2);
-  Serial.print(";");
-  Serial.print(temperatura, 2);
-  Serial.print(";");
-  Serial.println(irrigacao ? 't' : 'f');
-  Serial.println("---------------------------------------");
-  Serial.println("");
-  delay(5000);
+  delay(200);
 }

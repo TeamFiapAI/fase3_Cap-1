@@ -1,3 +1,9 @@
+import subprocess
+import webbrowser
+import os
+import sys
+import joblib
+import threading
 from db import executar_ddl, executar_insert, dropar_tabelas
 from exibir import exibir_produtores, exibir_fazendas, exibir_fazendas_produtores, exibir_tipo_sensor, exibir_sensor, exibir_plantacao, exibir_culturas, exibir_tipo_produto, exibir_aplicacao_produto, exibir_leitura_sensor
 from inserir import inserir_leitura_sensor
@@ -6,6 +12,40 @@ from excluir import excluir_leitura_sensor
 from simulador import insere_via_simulador, insere_via_texto
 from dashboard.dashoboard import gerar_graficos
 from api.api import consultar_api
+import uvicorn
+from fastapi import FastAPI
+from routers import dados_router
+from modelo.modelo import ModeloIrrigacao
+
+app = FastAPI(
+    title="FarmTech Solutions - API de Sensores",
+    version="1.0.0"
+)
+
+app.include_router(dados_router.router)
+
+
+def start_fastapi():
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, log_level="info")
+
+@app.on_event("startup")
+def carregar_modelo():
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    caminho_pasta_modelo = os.path.join(base_dir, "Scikit-learn_Streamlit")
+
+    modelo_path = os.path.join(caminho_pasta_modelo, "modelo.pkl")
+    scaler_path = os.path.join(caminho_pasta_modelo, "scaler.pkl")
+
+    if not os.path.exists(modelo_path):
+        raise RuntimeError(f"Arquivo modelo não encontrado: {modelo_path}")
+
+    if not os.path.exists(scaler_path):
+        raise RuntimeError(f"Arquivo scaler não encontrado: {scaler_path}")
+
+    app.state.modelo_irrigacao = joblib.load(modelo_path)
+    app.state.scaler_irrigacao = joblib.load(scaler_path)
+
+    print("✅ Modelo carregado na memória com sucesso!")
 
 def exibir_menu():
     print("\n=== Sistema ESP32 - Sensores ===")
@@ -28,10 +68,16 @@ def exibir_menu():
     print("16. * EXTRA - Graficos")
     print("17. * EXTRA - Consumir API")
     print("171. * EXTRA - Inserir Leitura Sensor via API")
-    print("18. Sair")
-
+    print("18. Scikit-learn (oracle)")
+    print("181 Scikit-learn (simulado CSV)")
+    print("19. Sair")
 
 def main():
+    modelo = ModeloIrrigacao()
+    modelo.treinar()
+
+    threading.Thread(target=start_fastapi, daemon=True).start()
+
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ").strip()
@@ -77,6 +123,23 @@ def main():
         elif opcao == "171":
             insere_via_simulador(True)
         elif opcao == "18":
+            webbrowser.open("http://localhost:8501")
+            subprocess.Popen(
+                [sys.executable, "-m", "streamlit", "run", "app_scikit_learn.py"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            print("Streamlit iniciado. Acesse http://localhost:8501")
+        elif opcao == "181":
+            caminho = os.path.join("Scikit-learn_Streamlit", "app_atualizado.py")
+            webbrowser.open("http://localhost:8502")
+            subprocess.Popen(
+                [sys.executable, "-m", "streamlit", "run", caminho],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            print("Streamlit iniciado. Acesse http://localhost:8502")
+        elif opcao == "19":
             print("Encerrando o programa.")
             break
         else:
@@ -86,4 +149,4 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"\n Ocorreu um erro inesperado: {e}")
+        print(f"Ocorreu um erro inesperado: {e}")
